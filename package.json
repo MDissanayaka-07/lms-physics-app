@@ -8,5 +8,8 @@
     "build": "npm --prefix client run build",
     "preview": "npm --prefix client run preview",
     "install:all": "npm --prefix client install"
+  },
+  "dependencies": {
+    "recharts": "^3.8.1"
   }
 }
