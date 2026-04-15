@@ -1,4 +1,22 @@
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+
 export default function Navbar({ eyebrow, title, description }) {
+  const { user } = useContext(AuthContext);
+
+  const roleLabel = user?.isAdmin
+    ? "Admin / Teacher"
+    : user?.role === "teacher"
+      ? "Teacher"
+      : "Student";
+  const initials = user?.fullName
+    ? user.fullName
+        .split(" ")
+        .slice(0, 2)
+        .map((part) => part[0]?.toUpperCase() || "")
+        .join("")
+    : "SM";
+
   return (
     <header className="dashboard-navbar">
       <div className="dashboard-navbar-copy">
@@ -15,10 +33,10 @@ export default function Navbar({ eyebrow, title, description }) {
           N
         </button>
         <div className="dashboard-profile-chip">
-          <div className="dashboard-avatar">SM</div>
+          <div className="dashboard-avatar">{initials}</div>
           <div>
-            <strong>Madhuwantha</strong>
-            <span>Student</span>
+            <strong>{user?.fullName || "Physics LMS"}</strong>
+            <span>{roleLabel}</span>
           </div>
         </div>
       </div>

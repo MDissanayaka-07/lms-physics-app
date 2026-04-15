@@ -28,11 +28,17 @@ const pageMeta = {
     eyebrow: "Assignment Center",
     title: "Submissions",
     description: "Upload your work, track review status, and keep your assignment history organized."
+  },
+  "/teacher": {
+    eyebrow: "Teacher Workspace",
+    title: "Teacher Dashboard",
+    description: "Monitor every student's performance, enter marks, manage quizzes, and review submissions."
   }
 };
 
 export default function MainLayout({ children }) {
   const location = useLocation();
+  const variant = location.pathname.startsWith("/teacher") ? "teacher" : "student";
 
   const meta = useMemo(() => {
     return (
@@ -46,7 +52,7 @@ export default function MainLayout({ children }) {
 
   return (
     <div className="dashboard-shell">
-      <Sidebar />
+      <Sidebar variant={variant} />
 
       <div className="dashboard-main">
         <Navbar

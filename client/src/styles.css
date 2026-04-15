@@ -68,6 +68,14 @@ button:hover {
   transform: translateY(-1px);
 }
 
+button:disabled {
+  cursor: not-allowed;
+  background: #b8c6cf;
+  color: #27414d;
+  box-shadow: none;
+  transform: none;
+}
+
 .card {
   background: rgba(255, 255, 255, 0.84);
   border: 1px solid rgba(255, 255, 255, 0.55);
@@ -131,6 +139,12 @@ button:hover {
   background:
     radial-gradient(circle at top right, rgba(245, 201, 92, 0.32), transparent 30%),
     linear-gradient(160deg, rgba(6, 38, 58, 0.98), rgba(29, 111, 138, 0.92));
+}
+
+.auth-hero-teacher {
+  background:
+    radial-gradient(circle at top right, rgba(122, 215, 207, 0.32), transparent 30%),
+    linear-gradient(160deg, rgba(6, 38, 58, 0.98), rgba(17, 84, 101, 0.94));
 }
 
 .auth-hero h1 {
@@ -280,6 +294,10 @@ button:hover {
   border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+.sidebar-teacher {
+  background: linear-gradient(180deg, rgba(27, 44, 58, 0.99), rgba(8, 59, 78, 0.98));
+}
+
 .sidebar-brand {
   display: flex;
   align-items: center;
@@ -307,6 +325,10 @@ button:hover {
   background: linear-gradient(145deg, var(--sun), #ff8d64);
   color: var(--night);
   font-weight: 900;
+}
+
+.sidebar-brand-badge-teacher {
+  background: linear-gradient(145deg, #7ad7cf, #f5c95c);
 }
 
 .sidebar-section + .sidebar-section {
@@ -381,12 +403,20 @@ button:hover {
   font-size: 0.88rem;
 }
 
+.sidebar-pill-teacher {
+  background: rgba(122, 215, 207, 0.14);
+}
+
 .sidebar-card {
   margin-top: 28px;
   padding: 18px;
   border-radius: 22px;
   background: linear-gradient(160deg, rgba(245, 201, 92, 0.15), rgba(255, 255, 255, 0.06));
   border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-card-teacher {
+  background: linear-gradient(160deg, rgba(122, 215, 207, 0.14), rgba(255, 255, 255, 0.06));
 }
 
 .sidebar-card-label {
@@ -851,7 +881,117 @@ button:hover {
 
 .submission-message {
   color: var(--sea);
- }
+}
+
+.teacher-hero {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.58)),
+    linear-gradient(135deg, rgba(29, 111, 138, 0.25), rgba(122, 215, 207, 0.18));
+}
+
+.access-banner {
+  border: 1px solid rgba(245, 201, 92, 0.4);
+  background: linear-gradient(180deg, rgba(245, 201, 92, 0.18), rgba(255, 255, 255, 0.82));
+}
+
+.teacher-form-grid {
+  grid-template-columns: 1fr;
+}
+
+.teacher-upload-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.teacher-student-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) minmax(180px, 1.4fr) minmax(120px, 0.8fr);
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0.98), rgba(241, 247, 250, 0.88));
+  border: 1px solid var(--line);
+}
+
+.teacher-student-row h4 {
+  margin: 0 0 6px;
+  font-size: 1.06rem;
+}
+
+.teacher-student-row p {
+  margin: 0;
+  color: #607885;
+}
+
+.teacher-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.teacher-progress-wrap small {
+  color: #607885;
+  font-weight: 700;
+}
+
+.progress-track {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(29, 111, 138, 0.12);
+  overflow: hidden;
+}
+
+.progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--sea), var(--mint));
+}
+
+.teacher-access-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.teacher-action-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.teacher-lock-note {
+  color: #607885;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.teacher-access-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.access-pill {
+  display: inline-flex;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(152, 170, 181, 0.2);
+  color: #5d737e;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.access-pill-on {
+  background: rgba(122, 215, 207, 0.24);
+  color: #0d6d64;
+}
 
 .activity-list {
   margin: 0;
@@ -886,7 +1026,8 @@ button:hover {
   .stats-grid,
   .dashboard-grid,
   .paper-grid,
-  .quiz-meta-grid {
+  .quiz-meta-grid,
+  .teacher-upload-grid {
     grid-template-columns: 1fr;
   }
 
@@ -936,5 +1077,18 @@ button:hover {
   .paper-card-top,
   .paper-actions {
     flex-direction: column;
+  }
+
+  .teacher-student-row {
+    grid-template-columns: 1fr;
+  }
+
+  .teacher-access-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .teacher-action-row {
+    align-items: flex-start;
   }
 }

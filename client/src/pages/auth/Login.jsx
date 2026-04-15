@@ -97,6 +97,7 @@ export default function Login() {
 
         <div className="auth-links">
           <Link to="/register">Create a new student account</Link>
+          <Link to="/teacher-login">Teacher login</Link>
           <a href="#forgot-password">Forgot password?</a>
         </div>
       </section>
