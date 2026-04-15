@@ -1,6 +1,5 @@
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const initialForm = {
   phoneNumber: "",
@@ -10,7 +9,6 @@ const initialForm = {
 export default function Login() {
   const [form, setForm] = useState(initialForm);
   const [error, setError] = useState("");
-  const { setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -30,51 +28,77 @@ export default function Login() {
       return;
     }
 
-    setUser({
-      fullName: "Student",
-      phoneNumber: form.phoneNumber
+    navigate("/otp", {
+      state: {
+        phoneNumber: form.phoneNumber
+      }
     });
-    navigate("/dashboard");
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "grid",
-        placeItems: "center",
-        padding: "24px"
-      }}
-    >
-      <section
-        className="card"
-        style={{
-          width: "min(460px, 100%)"
-        }}
-      >
-        <p className="chip">A/L Physics LMS</p>
-        <h1 style={{ marginBottom: "8px" }}>Student Login</h1>
-        <p style={{ marginTop: 0, color: "#4a6572" }}>
-          Sign in with your phone number to view lessons, marks, and resources.
+    <div className="auth-shell">
+      <section className="auth-hero">
+        <span className="chip">A/L Physics LMS</span>
+        <h1>Study smarter, track your marks, and stay connected to every lesson.</h1>
+        <p>
+          A student portal designed for physics classes with marks analysis, quiz
+          tracking, submissions, and AI-powered study help.
         </p>
 
+        <div className="auth-feature-list">
+          <article className="auth-feature-card">
+            <strong>Progress Curve</strong>
+            <span>Compare each test and identify your improvement trend.</span>
+          </article>
+          <article className="auth-feature-card">
+            <strong>AI Study Assistant</strong>
+            <span>Find model papers, quick revision prompts, and practice paths.</span>
+          </article>
+          <article className="auth-feature-card">
+            <strong>Teacher Connected</strong>
+            <span>Get updates on marks, submissions, and class tasks in one place.</span>
+          </article>
+        </div>
+      </section>
+
+      <section className="auth-panel">
+        <div className="auth-panel-head">
+          <p className="auth-eyebrow">Welcome back</p>
+          <h2>Login to your account</h2>
+          <p>Use your phone number and password to continue.</p>
+        </div>
+
         <form className="form-grid" onSubmit={handleSubmit}>
-          <input
-            name="phoneNumber"
-            placeholder="Phone Number"
-            value={form.phoneNumber}
-            onChange={handleChange}
-          />
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
-          />
+          <label className="auth-field">
+            <span>Phone Number</span>
+            <input
+              name="phoneNumber"
+              placeholder="077 123 4567"
+              value={form.phoneNumber}
+              onChange={handleChange}
+            />
+          </label>
+
+          <label className="auth-field">
+            <span>Password</span>
+            <input
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              value={form.password}
+              onChange={handleChange}
+            />
+          </label>
+
           {error ? <p className="error-msg">{error}</p> : null}
-          <button type="submit">Login</button>
+
+          <button type="submit">Continue with OTP</button>
         </form>
+
+        <div className="auth-links">
+          <Link to="/register">Create a new student account</Link>
+          <a href="#forgot-password">Forgot password?</a>
+        </div>
       </section>
     </div>
   );
