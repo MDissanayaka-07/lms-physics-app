@@ -13,6 +13,21 @@ const pageMeta = {
     eyebrow: "Performance",
     title: "Marks Analytics",
     description: "Review trends, compare recent exams, and identify your next target score."
+  },
+  "/quiz": {
+    eyebrow: "Student Workspace",
+    title: "Quizzes",
+    description: "Attempt weekly quizzes, review your latest attempts, and sharpen exam speed."
+  },
+  "/papers": {
+    eyebrow: "Resource Library",
+    title: "Papers",
+    description: "Browse past papers, model packs, and AI-guided paper recommendations."
+  },
+  "/submission": {
+    eyebrow: "Assignment Center",
+    title: "Submissions",
+    description: "Upload your work, track review status, and keep your assignment history organized."
   }
 };
 

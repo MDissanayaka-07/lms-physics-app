@@ -3,8 +3,9 @@ import { NavLink } from "react-router-dom";
 const navItems = [
   { to: "/dashboard", label: "Overview", hint: "Today" },
   { to: "/marks", label: "Marks", hint: "Progress" },
-  { to: "/dashboard#quizzes", label: "Quizzes", hint: "Weekly" },
-  { to: "/dashboard#resources", label: "Resources", hint: "Papers" }
+  { to: "/quiz", label: "Quizzes", hint: "Weekly" },
+  { to: "/papers", label: "Papers", hint: "Resources" },
+  { to: "/submission", label: "Submission", hint: "Upload" }
 ];
 
 const courseItems = ["A/L 2028", "A/L 2027", "A/L 2026"];

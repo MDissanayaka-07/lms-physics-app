@@ -767,6 +767,92 @@ button:hover {
   font-weight: 700;
 }
 
+.quiz-hero,
+.paper-grid,
+.stack-list {
+  display: grid;
+  gap: 14px;
+}
+
+.quiz-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.quiz-meta-card,
+.paper-card,
+.record-row {
+  padding: 18px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0.98), rgba(241, 247, 250, 0.88));
+  border: 1px solid var(--line);
+}
+
+.quiz-meta-card span,
+.paper-type,
+.record-row p {
+  color: #607885;
+}
+
+.quiz-meta-card strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 1.1rem;
+}
+
+.paper-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.paper-card-top,
+.paper-actions,
+.record-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.paper-card h4,
+.record-row h4 {
+  margin: 14px 0 6px;
+  font-size: 1.1rem;
+}
+
+.paper-year {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: rgba(29, 111, 138, 0.08);
+  color: var(--sea);
+  font-weight: 800;
+}
+
+.paper-actions {
+  margin-top: 18px;
+}
+
+.record-row-side {
+  text-align: right;
+}
+
+.record-row-side strong,
+.record-row-side span {
+  display: block;
+}
+
+.record-row-side span {
+  color: #607885;
+}
+
+.submission-message {
+  color: var(--sea);
+ }
+
 .activity-list {
   margin: 0;
   padding-left: 18px;
@@ -798,7 +884,9 @@ button:hover {
 
   .hero-panel,
   .stats-grid,
-  .dashboard-grid {
+  .dashboard-grid,
+  .paper-grid,
+  .quiz-meta-grid {
     grid-template-columns: 1fr;
   }
 
@@ -843,7 +931,10 @@ button:hover {
   }
 
   .lesson-card-top,
-  .ui-card-header {
+  .ui-card-header,
+  .record-row,
+  .paper-card-top,
+  .paper-actions {
     flex-direction: column;
   }
 }
