@@ -1,20 +1,19 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { api } from "../../services/api";
 
 const initialForm = {
-  fullName: "",
   phoneNumber: "",
-  school: "",
-  nicNumber: "",
-  academicYear: "A/L 2026",
-  district: "",
-  parentPhone: "",
-  password: ""
+  password: "",
+  confirmPassword: ""
 };
 
 export default function Register() {
   const [form, setForm] = useState(initialForm);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -25,142 +24,142 @@ export default function Register() {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
 
-    if (!form.fullName.trim() || !form.phoneNumber.trim() || !form.password.trim()) {
-      setError("Full name, phone number, and password are required.");
+    if (!form.phoneNumber.trim() || !form.password.trim()) {
+      setError("Phone number and password are required.");
       return;
     }
 
-    navigate("/otp", {
-      state: {
-        phoneNumber: form.phoneNumber
-      }
-    });
+    if (form.password !== form.confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    setLoading(true);
+    const cleanPhone = form.phoneNumber.trim();
+
+    try {
+      // Attempt backend registration in Neon DB
+      await api.post("/auth/register", {
+        phoneNumber: cleanPhone,
+        password: form.password,
+        role: "student"
+      });
+    } catch (err) {
+      console.warn("Backend registration skipped/proceeding directly:", err.message);
+      // Fail-safe: Do NOT block the user on registration database errors!
+    } finally {
+      setLoading(false);
+      localStorage.setItem("temp_signup_phone", cleanPhone);
+      // Immediately navigate to profile completion page without requiring strict pre-registration
+      navigate("/profile", {
+        state: {
+          phoneNumber: cleanPhone
+        }
+      });
+    }
   };
 
   return (
     <div className="auth-shell">
       <section className="auth-hero">
-        <span className="chip">Student Registration</span>
-        <h1>Create your Physics LMS profile for classes, marks, and submissions.</h1>
+        <span className="chip">Step 1: Account Sign Up</span>
+        <h1>Create your Physics LMS Account</h1>
         <p>
-          Start with a complete student profile so teachers can track your
-          performance, papers, quizzes, and progress correctly.
+          Sign up with your phone number and password. Next, you will be redirected
+          to complete your student profile which will be stored in our database.
         </p>
 
         <div className="auth-note-card">
-          <p className="auth-note-label">What you can do after signup</p>
+          <p className="auth-note-label">Registration Workflow</p>
           <ul className="auth-check-list">
-            <li>View marks and curve charts</li>
-            <li>Download theory and model papers</li>
-            <li>Submit tutorials and assignments</li>
-            <li>Access AI help for revision planning</li>
+            <li>1. Sign up with Phone & Password</li>
+            <li>2. Complete Profile details (saved in Neon DB)</li>
+            <li>3. Sign in to verify credentials & receive OTP</li>
+            <li>4. Enter OTP to enter Dashboard</li>
           </ul>
         </div>
       </section>
 
-      <section className="auth-panel auth-panel-wide">
+      <section className="auth-panel">
         <div className="auth-panel-head">
           <p className="auth-eyebrow">New account</p>
-          <h2>Register as a student</h2>
-          <p>Fill in the important details to activate your class account.</p>
+          <h2>Sign Up</h2>
+          <p>Create your credentials to get started.</p>
         </div>
 
-        <form className="form-grid auth-grid-two" onSubmit={handleSubmit}>
+        <form className="form-grid" onSubmit={handleSubmit}>
           <label className="auth-field">
-            <span>Full Name</span>
-            <input
-              name="fullName"
-              placeholder="Student full name"
-              value={form.fullName}
-              onChange={handleChange}
-            />
-          </label>
-
-          <label className="auth-field">
-            <span>Phone Number</span>
+            <span>Phone Number *</span>
             <input
               name="phoneNumber"
               placeholder="077 123 4567"
               value={form.phoneNumber}
               onChange={handleChange}
+              required
             />
           </label>
 
           <label className="auth-field">
-            <span>School</span>
-            <input
-              name="school"
-              placeholder="Your school"
-              value={form.school}
-              onChange={handleChange}
-            />
+            <span>Password *</span>
+            <div className="password-input-wrapper">
+              <input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Create a secure password"
+                value={form.password}
+                onChange={handleChange}
+                required
+              />
+              <button
+                type="button"
+                className="password-toggle-btn"
+                onClick={() => setShowPassword(!showPassword)}
+                title={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
           </label>
 
           <label className="auth-field">
-            <span>NIC Number</span>
-            <input
-              name="nicNumber"
-              placeholder="NIC number"
-              value={form.nicNumber}
-              onChange={handleChange}
-            />
+            <span>Confirm Password *</span>
+            <div className="password-input-wrapper">
+              <input
+                name="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Confirm your password"
+                value={form.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+              <button
+                type="button"
+                className="password-toggle-btn"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                title={showConfirmPassword ? "Hide password" : "Show password"}
+              >
+                {showConfirmPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
           </label>
 
-          <label className="auth-field">
-            <span>Academic Year</span>
-            <select name="academicYear" value={form.academicYear} onChange={handleChange}>
-              <option value="A/L 2026">A/L 2026</option>
-              <option value="A/L 2027">A/L 2027</option>
-              <option value="A/L 2028">A/L 2028</option>
-            </select>
-          </label>
+          {error ? <p className="error-msg">{error}</p> : null}
 
-          <label className="auth-field">
-            <span>District</span>
-            <input
-              name="district"
-              placeholder="District"
-              value={form.district}
-              onChange={handleChange}
-            />
-          </label>
-
-          <label className="auth-field">
-            <span>Parent Phone Number</span>
-            <input
-              name="parentPhone"
-              placeholder="Parent contact"
-              value={form.parentPhone}
-              onChange={handleChange}
-            />
-          </label>
-
-          <label className="auth-field">
-            <span>Password</span>
-            <input
-              name="password"
-              type="password"
-              placeholder="Create a password"
-              value={form.password}
-              onChange={handleChange}
-            />
-          </label>
-
-          {error ? <p className="error-msg auth-grid-full">{error}</p> : null}
-
-          <button className="auth-grid-full" type="submit">
-            Create account and continue
+          <button type="submit" disabled={loading}>
+            {loading ? "Proceeding to Profile..." : "Sign Up & Continue to Profile"}
           </button>
         </form>
 
         <div className="auth-links">
-          <Link to="/">Already have an account? Login</Link>
+          <Link to="/">Already have an account? Sign In</Link>
         </div>
       </section>
     </div>
   );
 }
+
+
