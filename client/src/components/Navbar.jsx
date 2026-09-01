@@ -1,45 +1,70 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Navbar({ eyebrow, title, description }) {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const roleLabel = user?.isAdmin
-    ? "Admin / Teacher"
-    : user?.role === "teacher"
+  const isTeacher = user?.role === "teacher" || user?.isAdmin;
+  const roleTitle = user?.isAdmin
+    ? "Teacher (Admin)"
+    : isTeacher
       ? "Teacher"
       : "Student";
-  const initials = user?.fullName
-    ? user.fullName
-        .split(" ")
-        .slice(0, 2)
-        .map((part) => part[0]?.toUpperCase() || "")
-        .join("")
-    : "SM";
+
+  const studentId = user?.studentId || "2541115";
+  const name = user?.fullName || "Madhuwantha Dissanayaka";
+  const avatarSrc = user?.avatarUrl || "/avatar.jpg";
+
+  const initials = name
+    .split(" ")
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() || "")
+    .join("");
 
   return (
     <header className="dashboard-navbar">
       <div className="dashboard-navbar-copy">
-        <p className="dashboard-eyebrow">{eyebrow}</p>
+        {eyebrow ? <p className="dashboard-eyebrow">{eyebrow}</p> : null}
         <h1 className="dashboard-title">{title}</h1>
-        <p className="dashboard-description">{description}</p>
+        {description ? <p className="dashboard-description">{description}</p> : null}
       </div>
 
       <div className="dashboard-navbar-actions">
-        <div className="dashboard-search">
-          <span className="dashboard-search-label">Search lessons, marks, quizzes</span>
-        </div>
-        <button className="dashboard-icon-button" type="button" aria-label="Notifications">
-          N
-        </button>
-        <div className="dashboard-profile-chip">
-          <div className="dashboard-avatar">{initials}</div>
-          <div>
-            <strong>{user?.fullName || "Physics LMS"}</strong>
-            <span>{roleLabel}</span>
+        <div
+          className="dashboard-profile-tag clickable-profile-tag"
+          onClick={() => navigate("/profile")}
+          title="Click to Manage Profile & Change Password"
+        >
+          <span className="profile-name">{name}</span>
+          <span className="profile-divider">|</span>
+          <img
+            className="profile-image"
+            src={avatarSrc}
+            alt={name}
+            onError={(e) => {
+              e.target.style.display = "none";
+              if (e.target.nextSibling) {
+                e.target.nextSibling.style.display = "flex";
+              }
+            }}
+          />
+          <div className="profile-avatar-fallback" style={{ display: "none" }}>
+            {initials}
           </div>
+          <span className="profile-divider">|</span>
+          <span className="profile-title">{roleTitle}</span>
+          {!isTeacher && (
+            <>
+              <span className="profile-divider">|</span>
+              <span className="profile-id">{studentId}</span>
+            </>
+          )}
         </div>
       </div>
     </header>
   );
 }
+
+
