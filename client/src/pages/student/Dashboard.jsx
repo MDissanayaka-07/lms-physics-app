@@ -1,158 +1,144 @@
+import { useContext } from "react";
 import MainLayout from "../../layouts/MainLayout";
 import Card from "../../components/Card";
-
-const statCards = [
-  {
-    title: "Student ID",
-    value: "2541115",
-    tone: "primary",
-    note: "Verified for 2026 advanced level batch"
-  },
-  {
-    title: "Average Score",
-    value: "78%",
-    tone: "success",
-    note: "Up by 12% compared with last month"
-  },
-  {
-    title: "Pending Submissions",
-    value: "02",
-    tone: "warning",
-    note: "Tutorial 12 and practical record"
-  }
-];
+import { AuthContext } from "../../context/AuthContext";
 
 const lessonItems = [
   {
     title: "Electrostatics",
-    meta: "Today at 7.30 PM",
-    status: "Live class",
-    description: "Field intensity, capacitor derivations, and rapid MCQ drill."
+    meta: "Today at 7:30 PM",
+    status: "Live Class",
+    tone: "live"
   },
   {
-    title: "Revision Quiz",
-    meta: "Due tomorrow",
-    status: "Action needed",
-    description: "25 mixed questions from mechanics and wave motion."
+    title: "Revision Quiz (Mechanics)",
+    meta: "Due Tomorrow",
+    status: "Action Needed",
+    tone: "warning"
   },
   {
     title: "Paper Discussion",
-    meta: "Saturday release",
+    meta: "Saturday Release",
     status: "Ready",
-    description: "Download worked solutions and compare method marks."
+    tone: "success"
   }
 ];
 
 const activityItems = [
-  "Marks for March unit test were published.",
-  "Your latest submission was reviewed by the teacher.",
-  "New model paper pack is available in resources."
+  { title: "March unit test marks published", time: "2h ago" },
+  { title: "Submission reviewed by teacher", time: "1d ago" },
+  { title: "New model paper pack added", time: "2d ago" }
 ];
 
 export default function Dashboard() {
+  const { user } = useContext(AuthContext);
+  const studentName = user?.fullName ? user.fullName.split(" ")[0] : "Madhuwantha";
+  const studentId = user?.studentId || "2541115";
+
   return (
     <MainLayout>
-      <section className="hero-panel">
-        <div>
-          <span className="chip">Good Morning</span>
-          <h2 className="hero-heading">Welcome back, Madhuwantha.</h2>
-          <p className="hero-copy">
-            Your dashboard is organized around the things that matter most today:
-            class readiness, score growth, submissions, and quick access to
-            learning tools.
-          </p>
-
-          <div className="hero-actions">
-            <a className="hero-button" href="/marks">
-              View marks
-            </a>
-            <a className="hero-button hero-button-secondary" href="/papers">
-              Open papers
-            </a>
+      {/* Compact Top Banner */}
+      <section className="dashboard-hero-compact">
+        <div className="hero-compact-left">
+          <div className="hero-greeting-row">
+            <h2>Welcome back, {studentName} 👋</h2>
+            <span className="hero-goal-pill">🎯 Target: 85% average next paper</span>
           </div>
         </div>
 
-        <div className="hero-highlight">
-          <p className="hero-highlight-label">Next Goal</p>
-          <h3>Reach 85% average before the next monthly paper.</h3>
-          <p>
-            Focus on timed structured questions and revise capacitor graphs this
-            week.
-          </p>
+        <div className="hero-compact-right">
+          <a className="hero-btn primary" href="/marks">
+            View Marks
+          </a>
+          <a className="hero-btn secondary" href="/papers">
+            Open Papers
+          </a>
         </div>
       </section>
 
-      <section className="stats-grid">
-        {statCards.map((card) => (
-          <Card className="metric-card" key={card.title} tone={card.tone}>
-            <p className="metric-label">{card.title}</p>
-            <h3 className="metric-value">{card.value}</h3>
-            <p className="metric-note">{card.note}</p>
-          </Card>
-        ))}
+      {/* Metrics Row */}
+      <section className="stats-row-compact">
+        <div className="metric-pill">
+          <span className="metric-title">Student ID</span>
+          <strong className="metric-val">{studentId}</strong>
+          <span className="metric-sub">2026 A/L Batch</span>
+        </div>
+
+        <div className="metric-pill highlighted">
+          <span className="metric-title">Average Score</span>
+          <strong className="metric-val">78%</strong>
+          <span className="metric-sub trend-up">↑ +12% this month</span>
+        </div>
+
+        <div className="metric-pill">
+          <span className="metric-title">Pending Submissions</span>
+          <strong className="metric-val">02</strong>
+          <span className="metric-sub">Tutorial 12 & Practical</span>
+        </div>
       </section>
 
-      <section className="dashboard-grid">
-        <Card
-          className="dashboard-panel dashboard-panel-wide"
-          eyebrow="Today's flow"
-          title="What you should do next"
-          action={<span className="section-badge">3 priorities</span>}
-        >
-          <div className="lesson-list">
-            {lessonItems.map((item) => (
-              <article className="lesson-card" key={item.title}>
-                <div className="lesson-card-top">
-                  <div>
-                    <h4>{item.title}</h4>
-                    <p>{item.meta}</p>
+      {/* Streamlined 2-Column Dashboard Grid */}
+      <section className="dashboard-grid-compact">
+        {/* Left Column: Today's Priorities & Feed */}
+        <div className="dashboard-col-main">
+          <Card className="compact-card" title="Today's Priorities">
+            <div className="compact-lesson-list">
+              {lessonItems.map((item) => (
+                <div className="compact-lesson-row" key={item.title}>
+                  <div className="compact-lesson-info">
+                    <strong>{item.title}</strong>
+                    <span>{item.meta}</span>
                   </div>
-                  <span className="status-pill">{item.status}</span>
+                  <span className={`compact-status-badge ${item.tone}`}>
+                    {item.status}
+                  </span>
                 </div>
-                <p className="lesson-description">{item.description}</p>
-              </article>
-            ))}
-          </div>
-        </Card>
+              ))}
+            </div>
+          </Card>
 
-        <Card className="dashboard-panel" eyebrow="AI assistant" title="Study support">
-          <div className="assistant-card">
-            <p className="assistant-title">Ask Me Anything</p>
-            <p className="assistant-copy">
-              Download model papers, get revision prompts, and find the right
-              topic to review before class.
-            </p>
-            <a className="hero-button" href="/papers">
-              Open paper bot
-            </a>
-          </div>
-        </Card>
+          <Card className="compact-card" title="Recent Activity">
+            <ul className="compact-activity-list">
+              {activityItems.map((item) => (
+                <li key={item.title}>
+                  <span>{item.title}</span>
+                  <small>{item.time}</small>
+                </li>
+              ))}
+            </ul>
+          </Card>
+        </div>
 
-        <Card className="dashboard-panel" eyebrow="Quick links" title="Resources">
-          <div className="resource-list">
-            <a className="resource-link" href="/marks">
-              Marks and growth curve
-            </a>
-            <a className="resource-link" href="/papers">
-              Past paper packs
-            </a>
-            <a className="resource-link" href="/quiz">
-              Weekly quizzes
-            </a>
-            <a className="resource-link" href="/submission">
-              Submit tutorial PDF
-            </a>
-          </div>
-        </Card>
+        {/* Right Column: Quick Shortcuts & AI */}
+        <div className="dashboard-col-side">
+          <Card className="compact-card" title="Quick Links">
+            <div className="quick-links-grid">
+              <a className="quick-link-tile" href="/marks">
+                📈 Marks & Curve
+              </a>
+              <a className="quick-link-tile" href="/papers">
+                📄 Past Papers
+              </a>
+              <a className="quick-link-tile" href="/quiz">
+                📝 Weekly Quizzes
+              </a>
+              <a className="quick-link-tile" href="/submission">
+                📤 Submit Tutorial
+              </a>
+            </div>
+          </Card>
 
-        <Card className="dashboard-panel" eyebrow="Recent updates" title="Activity feed">
-          <ul className="activity-list">
-            {activityItems.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </Card>
+          <Card className="compact-card ai-card" title="AI Study Assistant">
+            <div className="ai-compact-box">
+              <p>Ask model paper questions & revision prompts.</p>
+              <a className="hero-btn primary full-width" href="/papers">
+                🤖 Open AI Bot
+              </a>
+            </div>
+          </Card>
+        </div>
       </section>
     </MainLayout>
   );
 }
+
