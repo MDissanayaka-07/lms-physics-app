@@ -57,7 +57,7 @@ export default function TeacherDashboard() {
     revokeTeacherPublishing
   } = useContext(AuthContext);
 
-  const canPublish = Boolean(user?.canPublish ?? true);
+  const canPublish = Boolean(user?.canPublish ?? false);
   const isAdmin = Boolean(user?.isAdmin);
 
   return (
@@ -191,7 +191,7 @@ export default function TeacherDashboard() {
             </label>
 
             <div className="teacher-action-row">
-              <button type="button">Upload quiz</button>
+              <button type="button" disabled>Upload quiz</button>
             </div>
           </form>
         </Card>
@@ -268,7 +268,9 @@ export default function TeacherDashboard() {
               </label>
 
               <div className="teacher-action-row">
-                <button type="button">Upload question PDF</button>
+                <button type="button" disabled title="PDF upload is not yet implemented">
+                  Upload question PDF
+                </button>
               </div>
             </form>
 

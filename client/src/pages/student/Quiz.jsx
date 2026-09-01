@@ -70,7 +70,9 @@ export default function Quiz() {
             <p className="lesson-description">{upcomingQuiz.note}</p>
 
             <div className="hero-actions">
-              <button type="button">Start quiz</button>
+              <button type="button" disabled title="Start quiz is not available yet">
+                Start quiz
+              </button>
               <button className="hero-button hero-button-secondary" type="button">
                 Review notes first
               </button>
