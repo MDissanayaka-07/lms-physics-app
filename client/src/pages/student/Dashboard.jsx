@@ -66,8 +66,8 @@ export default function Dashboard() {
             <a className="hero-button" href="/marks">
               View marks
             </a>
-            <a className="hero-button hero-button-secondary" href="#assistant">
-              Open AI assistant
+            <a className="hero-button hero-button-secondary" href="/papers">
+              Open papers
             </a>
           </div>
         </div>
@@ -122,7 +122,9 @@ export default function Dashboard() {
               Download model papers, get revision prompts, and find the right
               topic to review before class.
             </p>
-            <button type="button">Launch assistant</button>
+            <a className="hero-button" href="/papers">
+              Open paper bot
+            </a>
           </div>
         </Card>
 
@@ -131,11 +133,14 @@ export default function Dashboard() {
             <a className="resource-link" href="/marks">
               Marks and growth curve
             </a>
-            <a className="resource-link" href="#papers">
+            <a className="resource-link" href="/papers">
               Past paper packs
             </a>
-            <a className="resource-link" href="#pdfs">
-              Tutorial PDFs
+            <a className="resource-link" href="/quiz">
+              Weekly quizzes
+            </a>
+            <a className="resource-link" href="/submission">
+              Submit tutorial PDF
             </a>
           </div>
         </Card>
