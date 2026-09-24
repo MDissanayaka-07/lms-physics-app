@@ -1157,6 +1157,112 @@ button:disabled {
   gap: 18px;
 }
 
+.kpi-extended-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.kpi-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.kpi-enhanced-card {
+  min-height: 190px;
+  position: relative;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.kpi-card-link:hover .kpi-enhanced-card {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(6, 38, 58, 0.12);
+  border-color: rgba(23, 107, 135, 0.35);
+}
+
+.kpi-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.kpi-card-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(23, 107, 135, 0.1);
+  color: var(--sea);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kpi-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.kpi-pill-success {
+  background: rgba(16, 185, 129, 0.15);
+  color: #047857;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.kpi-pill-primary {
+  background: rgba(23, 107, 135, 0.12);
+  color: var(--sea);
+  border: 1px solid rgba(23, 107, 135, 0.25);
+}
+
+.kpi-pill-warning {
+  background: rgba(245, 158, 11, 0.15);
+  color: #b45309;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.kpi-progress-bar {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(6, 38, 58, 0.08);
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.kpi-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #176b87, #7ad7cf);
+  transition: width 400ms ease;
+}
+
+.section-badge-interactive {
+  text-decoration: none;
+  transition: all 180ms ease;
+}
+
+.section-badge-interactive:hover {
+  background: var(--sea);
+  color: var(--white);
+  transform: translateX(2px);
+}
+
+.dashboard-chart-container {
+  padding-top: 12px;
+}
+
 .metric-card {
   min-height: 180px;
 }
