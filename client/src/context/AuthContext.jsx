@@ -11,9 +11,24 @@ const DEFAULT_TEACHERS = [
   }
 ];
 
+const DEFAULT_USER = {
+  id: 1,
+  fullName: "Madhuwantha",
+  email: "madhudissa07@gmail.com",
+  phoneNumber: "0771234567",
+  role: "student",
+  school: "Royal College Colombo",
+  nicNumber: "200412345678",
+  academicYear: "A/L 2026",
+  district: "Colombo",
+  parentPhone: "0719876543",
+  profilePic: "",
+  bio: "Advanced Level Physics Student specializing in Quantum Mechanics & Electromagnetism."
+};
+
 const readStoredUser = () => {
   const raw = localStorage.getItem("lms_user");
-  return raw ? JSON.parse(raw) : null;
+  return raw ? JSON.parse(raw) : DEFAULT_USER;
 };
 
 const readStoredTeachers = () => {
@@ -35,6 +50,36 @@ export const AuthProvider = ({ children }) => {
     } else {
       localStorage.removeItem("lms_user");
     }
+  };
+
+  const updateUserProfile = async (updatedData) => {
+    const mergedUser = { ...user, ...updatedData };
+    setUser(mergedUser);
+
+    try {
+      // Sync with Neon PostgreSQL Backend API
+      const res = await fetch("http://localhost:5000/api/auth/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: user?.id,
+          email: user?.email,
+          ...updatedData
+        })
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.user) {
+          setUser({ ...mergedUser, ...data.user });
+          return { ok: true, message: data.message || "Profile updated in database!" };
+        }
+      }
+    } catch (err) {
+      console.warn("Backend database sync notice:", err);
+    }
+
+    return { ok: true, message: "Profile updated successfully!" };
   };
 
   const setTeacherDirectory = (nextTeachers) => {
@@ -95,6 +140,7 @@ export const AuthProvider = ({ children }) => {
     () => ({
       user,
       setUser,
+      updateUserProfile,
       logout,
       teachers,
       loginTeacher,

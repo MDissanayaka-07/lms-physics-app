@@ -63,9 +63,22 @@ const initTables = async () => {
         academic_year VARCHAR(50),
         district VARCHAR(100),
         parent_phone VARCHAR(50),
+        profile_pic TEXT,
+        bio TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `;
+
+    // Ensure columns exist if table was created previously
+    try {
+      await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS profile_pic TEXT;`;
+      await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS bio TEXT;`;
+      await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS first_name VARCHAR(100);`;
+      await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS last_name VARCHAR(100);`;
+      await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS calling_name VARCHAR(100);`;
+    } catch (colErr) {
+      // Column alteration log ignore
+    }
 
     // Create Marks table
     await sql`

@@ -29,6 +29,11 @@ const pageMeta = {
     title: "Submissions",
     description: "Upload your work, track review status, and keep your assignment history organized."
   },
+  "/profile": {
+    eyebrow: "Account & Settings",
+    title: "Profile Settings",
+    description: "Manage your personal information, profile photo, contact details, and academic batch."
+  },
   "/teacher": {
     eyebrow: "Teacher Workspace",
     title: "Teacher Dashboard",

@@ -245,7 +245,14 @@ export const loginUser = async (req, res) => {
           fullName: user.full_name,
           email: user.email,
           phoneNumber: user.phone_number,
-          role: user.role
+          role: user.role,
+          school: user.school || "",
+          nicNumber: user.nic_number || "",
+          academicYear: user.academic_year || "A/L 2026",
+          district: user.district || "",
+          parentPhone: user.parent_phone || "",
+          profilePic: user.profile_pic || "",
+          bio: user.bio || ""
         }
       });
     }
@@ -256,3 +263,130 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+/**
+ * Get User Profile
+ */
+export const getProfile = async (req, res) => {
+  try {
+    const { identifier } = req.params;
+
+    if (!sql) {
+      return res.status(500).json({ message: "Database not connected." });
+    }
+
+    const rows = await sql`
+      SELECT id, role, full_name, email, phone_number, school, nic_number, academic_year, district, parent_phone, profile_pic, bio, created_at
+      FROM users
+      WHERE id::text = ${identifier} OR LOWER(email) = ${identifier.toLowerCase()} OR phone_number = ${identifier}
+      LIMIT 1
+    `;
+
+    if (!rows || rows.length === 0) {
+      return res.status(404).json({ message: "User profile not found." });
+    }
+
+    const user = rows[0];
+    res.json({
+      success: true,
+      user: {
+        id: user.id,
+        role: user.role,
+        fullName: user.full_name,
+        email: user.email,
+        phoneNumber: user.phone_number,
+        school: user.school || "",
+        nicNumber: user.nic_number || "",
+        academicYear: user.academic_year || "A/L 2026",
+        district: user.district || "",
+        parentPhone: user.parent_phone || "",
+        profilePic: user.profile_pic || "",
+        bio: user.bio || "",
+        createdAt: user.created_at
+      }
+    });
+  } catch (error) {
+    console.error("getProfile Error:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+/**
+ * Update User Profile
+ */
+export const updateProfile = async (req, res) => {
+  try {
+    const {
+      id,
+      email,
+      fullName,
+      phoneNumber,
+      school,
+      nicNumber,
+      academicYear,
+      district,
+      parentPhone,
+      profilePic,
+      bio,
+      password
+    } = req.body;
+
+    if (!sql) {
+      return res.status(500).json({ message: "Database not connected." });
+    }
+
+    const cleanEmail = email ? email.toLowerCase().trim() : "";
+    let hashedPassword = null;
+    if (password && password.length >= 6) {
+      hashedPassword = await bcrypt.hash(password, 10);
+    }
+
+    const rows = await sql`
+      UPDATE users
+      SET 
+        full_name = COALESCE(${fullName}, full_name),
+        phone_number = COALESCE(${phoneNumber}, phone_number),
+        school = ${school || null},
+        nic_number = ${nicNumber || null},
+        academic_year = ${academicYear || null},
+        district = ${district || null},
+        parent_phone = ${parentPhone || null},
+        profile_pic = ${profilePic || null},
+        bio = ${bio || null},
+        password = COALESCE(${hashedPassword}, password)
+      WHERE id = ${id || 0} OR (email IS NOT NULL AND LOWER(email) = ${cleanEmail})
+      RETURNING id, role, full_name, email, phone_number, school, nic_number, academic_year, district, parent_phone, profile_pic, bio
+    `;
+
+    let user = rows && rows.length > 0 ? rows[0] : null;
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found in Neon database to update." });
+    }
+
+    console.log(`✅ [NEON DB] Profile updated for user ID ${user.id} (${user.full_name})`);
+
+    res.json({
+      success: true,
+      message: "Profile updated successfully!",
+      user: {
+        id: user.id,
+        role: user.role,
+        fullName: user.full_name,
+        email: user.email,
+        phoneNumber: user.phone_number,
+        school: user.school || "",
+        nicNumber: user.nic_number || "",
+        academicYear: user.academic_year || "A/L 2026",
+        district: user.district || "",
+        parentPhone: user.parent_phone || "",
+        profilePic: user.profile_pic || "",
+        bio: user.bio || ""
+      }
+    });
+  } catch (error) {
+    console.error("updateProfile Error:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+

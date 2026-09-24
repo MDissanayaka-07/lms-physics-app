@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Navbar({ eyebrow, title, description }) {
@@ -15,7 +16,7 @@ export default function Navbar({ eyebrow, title, description }) {
         .slice(0, 2)
         .map((part) => part[0]?.toUpperCase() || "")
         .join("")
-    : "SM";
+    : "M";
 
   return (
     <header className="dashboard-navbar">
@@ -26,19 +27,23 @@ export default function Navbar({ eyebrow, title, description }) {
       </div>
 
       <div className="dashboard-navbar-actions">
-        <div className="dashboard-search">
-          <span className="dashboard-search-label">Search lessons, marks, quizzes</span>
-        </div>
-        <button className="dashboard-icon-button" type="button" aria-label="Notifications">
-          N
-        </button>
-        <div className="dashboard-profile-chip">
-          <div className="dashboard-avatar">{initials}</div>
+        <Link 
+          to="/profile" 
+          className="dashboard-profile-chip clickable-profile-chip"
+          title="Click to view & edit Profile Settings"
+        >
+          <div className="dashboard-avatar">
+            {user?.profilePic ? (
+              <img src={user.profilePic} alt={user?.fullName || "User Avatar"} className="dashboard-avatar-img" />
+            ) : (
+              initials
+            )}
+          </div>
           <div>
-            <strong>{user?.fullName || "Physics LMS"}</strong>
+            <strong>{user?.callingName ? `${user.firstName ? user.firstName + ' ' : ''}${user.callingName}` : user?.fullName || "Dissanayaka Madhuwantha"}</strong>
             <span>{roleLabel}</span>
           </div>
-        </div>
+        </Link>
       </div>
     </header>
   );

@@ -946,10 +946,31 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 8px 10px 8px 8px;
+  padding: 8px 14px 8px 8px;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.72);
   border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.clickable-profile-chip {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.clickable-profile-chip:hover {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 24px rgba(6, 38, 58, 0.14);
+  transform: translateY(-2px);
+  border-color: var(--sea);
+}
+
+.dashboard-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
 }
 
 .dashboard-profile-chip strong,
@@ -2486,4 +2507,140 @@ button:disabled {
     display: none;
   }
 }
+
+/* ==========================================================================
+   PROFILE SETTINGS PAGE STYLES
+   ========================================================================== */
+
+.profile-settings-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profile-hero-card {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 248, 255, 0.9) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  padding: 28px;
+}
+
+.profile-avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-large-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, var(--night), var(--sea));
+  box-shadow: 0 14px 35px rgba(6, 38, 58, 0.25);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border: 3px solid #FFFFFF;
+}
+
+.profile-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-avatar-fallback {
+  color: #FFFFFF;
+  font-size: 2.5rem;
+  font-weight: 900;
+}
+
+.avatar-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.avatar-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: var(--sea);
+  color: #FFFFFF;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.avatar-upload-btn:hover {
+  background: #125468;
+  transform: translateY(-1px);
+}
+
+.avatar-remove-btn {
+  background: transparent;
+  color: #dc2626;
+  font-size: 0.78rem;
+  padding: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.avatar-remove-btn:hover {
+  text-decoration: underline;
+  background: transparent;
+  box-shadow: none;
+}
+
+.profile-summary h2 {
+  margin: 0 0 6px;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--night);
+}
+
+.profile-role-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(29, 111, 138, 0.12);
+  color: var(--sea);
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+}
+
+.profile-email-text {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #5d7785;
+  font-size: 0.9rem;
+}
+
+.profile-form-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 20px;
+}
+
+@media (max-width: 768px) {
+  .profile-hero-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 

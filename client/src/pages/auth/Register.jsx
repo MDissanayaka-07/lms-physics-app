@@ -4,7 +4,9 @@ import { sendVerificationEmail } from "../../services/emailService";
 import PhysicsBackground from "../../components/PhysicsBackground";
 
 const initialForm = {
-  fullName: "",
+  firstName: "",
+  lastName: "",
+  callingName: "",
   email: "",
   phoneNumber: "",
   school: "",
@@ -33,10 +35,10 @@ export default function Register() {
     let errorMsg = "";
     const cleanValue = typeof value === "string" ? value.trim() : value;
 
-    if (name === "fullName") {
-      if (!cleanValue) errorMsg = "Full name is required.";
-      else if (cleanValue.length < 2) errorMsg = "Enter your complete full name.";
-    }
+    if (name === "firstName" && !cleanValue) errorMsg = "First name is required.";
+    if (name === "lastName" && !cleanValue) errorMsg = "Last name is required.";
+    if (name === "callingName" && !cleanValue) errorMsg = "Calling name is required.";
+    if (name === "nicNumber" && !cleanValue) errorMsg = "NIC number is required.";
     
     if (name === "email") {
       if (!cleanValue) errorMsg = "Email address is required for login.";
@@ -104,7 +106,10 @@ export default function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const nameErr = validateField("fullName", form.fullName, form);
+    const firstNameErr = validateField("firstName", form.firstName, form);
+    const lastNameErr = validateField("lastName", form.lastName, form);
+    const callingNameErr = validateField("callingName", form.callingName, form);
+    const nicErr = validateField("nicNumber", form.nicNumber, form);
     const emailErr = validateField("email", form.email, form);
     const phoneErr = validateField("phoneNumber", form.phoneNumber, form);
     const parentPhoneErr = validateField("parentPhone", form.parentPhone, form);
@@ -112,7 +117,10 @@ export default function Register() {
     const confirmPassErr = validateField("confirmPassword", form.confirmPassword, form);
 
     const allErrors = {
-      fullName: nameErr,
+      firstName: firstNameErr,
+      lastName: lastNameErr,
+      callingName: callingNameErr,
+      nicNumber: nicErr,
       email: emailErr,
       phoneNumber: phoneErr,
       parentPhone: parentPhoneErr,
@@ -121,24 +129,28 @@ export default function Register() {
     };
 
     setTouched({
-      fullName: true,
+      firstName: true,
+      lastName: true,
+      callingName: true,
+      nicNumber: true,
       email: true,
       phoneNumber: true,
       parentPhone: true,
       password: true,
       confirmPassword: true,
       school: true,
-      nicNumber: true,
       district: true
     });
 
     setErrors(allErrors);
 
-    if (nameErr || emailErr || phoneErr || parentPhoneErr || passErr || confirmPassErr) {
+    if (firstNameErr || lastNameErr || callingNameErr || nicErr || emailErr || phoneErr || parentPhoneErr || passErr || confirmPassErr) {
       return;
     }
 
     setIsSubmitting(true);
+
+    const computedFullName = `${form.firstName} ${form.lastName}`.trim() || form.callingName;
 
     try {
       // 1. Save user tuple into Neon PostgreSQL database
@@ -148,7 +160,10 @@ export default function Register() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             role: "student",
-            fullName: form.fullName,
+            firstName: form.firstName,
+            lastName: form.lastName,
+            callingName: form.callingName,
+            fullName: computedFullName,
             email: form.email,
             phoneNumber: form.phoneNumber,
             password: form.password,
@@ -201,34 +216,87 @@ export default function Register() {
         </div>
 
         <form className="form-grid auth-grid-two" onSubmit={handleSubmit} noValidate>
-          {/* Full Name */}
+          {/* Row 1: First Name & Last Name */}
           <div className="auth-field">
-            <label htmlFor="fullName">Full Name *</label>
-            <div className={`input-wrapper ${touched.fullName && errors.fullName ? "has-error" : ""} ${touched.fullName && !errors.fullName && form.fullName ? "is-valid" : ""}`}>
-              <svg className="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
-              </svg>
+            <label htmlFor="firstName">First Name *</label>
+            <div className={`input-wrapper ${touched.firstName && errors.firstName ? "has-error" : ""} ${touched.firstName && !errors.firstName && form.firstName ? "is-valid" : ""}`}>
               <input
-                id="fullName"
-                name="fullName"
-                placeholder="Student full name"
-                value={form.fullName}
+                id="firstName"
+                name="firstName"
+                placeholder="First name"
+                value={form.firstName}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
             </div>
-            {touched.fullName && errors.fullName && (
+            {touched.firstName && errors.firstName && (
+              <span className="field-error-msg">{errors.firstName}</span>
+            )}
+          </div>
+
+          <div className="auth-field">
+            <label htmlFor="lastName">Last Name *</label>
+            <div className={`input-wrapper ${touched.lastName && errors.lastName ? "has-error" : ""} ${touched.lastName && !errors.lastName && form.lastName ? "is-valid" : ""}`}>
+              <input
+                id="lastName"
+                name="lastName"
+                placeholder="Last name"
+                value={form.lastName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </div>
+            {touched.lastName && errors.lastName && (
+              <span className="field-error-msg">{errors.lastName}</span>
+            )}
+          </div>
+
+          {/* Row 2: Calling Name & NIC Number (Parallel in same row) */}
+          <div className="auth-field">
+            <label htmlFor="callingName">Calling Name (Name used in class) *</label>
+            <div className={`input-wrapper ${touched.callingName && errors.callingName ? "has-error" : ""} ${touched.callingName && !errors.callingName && form.callingName ? "is-valid" : ""}`}>
+              <input
+                id="callingName"
+                name="callingName"
+                placeholder="Calling name"
+                value={form.callingName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </div>
+            {touched.callingName && errors.callingName && (
+              <span className="field-error-msg">{errors.callingName}</span>
+            )}
+          </div>
+
+          <div className="auth-field">
+            <label htmlFor="nicNumber">NIC Number *</label>
+            <div className={`input-wrapper ${touched.nicNumber && errors.nicNumber ? "has-error" : ""} ${touched.nicNumber && !errors.nicNumber && form.nicNumber ? "is-valid" : ""}`}>
+              <svg className="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="3" y="4" width="18" height="16" rx="2"/>
+                <line x1="7" y1="8" x2="17" y2="8"/>
+                <line x1="7" y1="12" x2="13" y2="12"/>
+              </svg>
+              <input
+                id="nicNumber"
+                name="nicNumber"
+                placeholder="NIC number"
+                value={form.nicNumber}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </div>
+            {touched.nicNumber && errors.nicNumber && (
               <span className="field-error-msg">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                 </svg>
-                {errors.fullName}
+                {errors.nicNumber}
               </span>
             )}
           </div>
 
-          {/* Email Address */}
+          {/* Row 3: Email Address & Phone Number */}
           <div className="auth-field">
             <label htmlFor="email">Email Address (Login Email) *</label>
             <div className={`input-wrapper ${touched.email && errors.email ? "has-error" : ""} ${touched.email && !errors.email && form.email ? "is-valid" : ""}`}>
@@ -256,7 +324,6 @@ export default function Register() {
             )}
           </div>
 
-          {/* Phone Number */}
           <div className="auth-field">
             <label htmlFor="phoneNumber">Phone Number *</label>
             <div className={`input-wrapper ${touched.phoneNumber && errors.phoneNumber ? "has-error" : ""} ${touched.phoneNumber && !errors.phoneNumber && form.phoneNumber ? "is-valid" : ""}`}>
@@ -282,7 +349,7 @@ export default function Register() {
             )}
           </div>
 
-          {/* School */}
+          {/* Row 4: School & Academic Year */}
           <div className="auth-field">
             <label htmlFor="school">School</label>
             <div className="input-wrapper">
@@ -300,26 +367,6 @@ export default function Register() {
             </div>
           </div>
 
-          {/* NIC Number */}
-          <div className="auth-field">
-            <label htmlFor="nicNumber">NIC Number</label>
-            <div className="input-wrapper">
-              <svg className="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="4" width="18" height="16" rx="2"/>
-                <line x1="7" y1="8" x2="17" y2="8"/>
-                <line x1="7" y1="12" x2="13" y2="12"/>
-              </svg>
-              <input
-                id="nicNumber"
-                name="nicNumber"
-                placeholder="NIC number"
-                value={form.nicNumber}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          {/* Academic Year */}
           <div className="auth-field">
             <label htmlFor="academicYear">Academic Year</label>
             <div className="input-wrapper select-wrapper">
@@ -340,7 +387,7 @@ export default function Register() {
             </div>
           </div>
 
-          {/* District */}
+          {/* Row 5: District & Parent Phone Number */}
           <div className="auth-field">
             <label htmlFor="district">District</label>
             <div className="input-wrapper">
@@ -358,7 +405,6 @@ export default function Register() {
             </div>
           </div>
 
-          {/* Parent Phone Number */}
           <div className="auth-field">
             <label htmlFor="parentPhone">Parent Phone Number</label>
             <div className={`input-wrapper ${touched.parentPhone && errors.parentPhone ? "has-error" : ""}`}>
