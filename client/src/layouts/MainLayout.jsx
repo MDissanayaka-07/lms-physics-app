@@ -24,10 +24,20 @@ const pageMeta = {
     title: "Papers",
     description: "Browse past papers, model packs, and AI-guided paper recommendations."
   },
+  "/lessons": {
+    eyebrow: "Learning Modules & Resources",
+    title: "Physics Lessons Hub",
+    description: "Explore topic lessons with lecture notes, question tutes, video sessions, and interactive Q&A."
+  },
+  "/lesson": {
+    eyebrow: "Learning Modules & Resources",
+    title: "Physics Lessons Hub",
+    description: "Explore topic lessons with lecture notes, question tutes, video sessions, and interactive Q&A."
+  },
   "/submission": {
-    eyebrow: "Assignment Center",
-    title: "Submissions",
-    description: "Upload your work, track review status, and keep your assignment history organized."
+    eyebrow: "Learning Modules & Resources",
+    title: "Physics Lessons Hub",
+    description: "Explore topic lessons with lecture notes, question tutes, video sessions, and interactive Q&A."
   },
   "/profile": {
     eyebrow: "Account & Settings",

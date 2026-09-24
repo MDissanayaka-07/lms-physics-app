@@ -144,8 +144,8 @@ export default function Dashboard() {
             <a className="resource-link" href="/quiz">
               Weekly quizzes
             </a>
-            <a className="resource-link" href="/submission">
-              Submit tutorial PDF
+            <a className="resource-link" href="/lessons">
+              Physics Topic Lessons
             </a>
           </div>
         </Card>

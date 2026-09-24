@@ -7,7 +7,7 @@ import Dashboard from "./pages/student/Dashboard";
 import Marks from "./pages/student/Marks";
 import Quiz from "./pages/student/Quiz";
 import Papers from "./pages/student/Papers";
-import Submission from "./pages/student/Submission";
+import Lessons from "./pages/student/Lessons";
 import Profile from "./pages/student/Profile";
 import TeacherDashboard from "./pages/teacher/TeacherDashboard";
 import AntigravityMechanics from "./pages/student/AntigravityMechanics";
@@ -25,7 +25,9 @@ function App() {
       <Route path="/marks" element={<Marks />} />
       <Route path="/quiz" element={<Quiz />} />
       <Route path="/papers" element={<Papers />} />
-      <Route path="/submission" element={<Submission />} />
+      <Route path="/lessons" element={<Lessons />} />
+      <Route path="/lesson" element={<Lessons />} />
+      <Route path="/submission" element={<Lessons />} />
       <Route path="/teacher" element={<TeacherDashboard />} />
     </Routes>
   );
