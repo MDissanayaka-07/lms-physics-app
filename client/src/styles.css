@@ -111,16 +111,98 @@ button:disabled {
   color: #d6455d;
 }
 
+.physics-bg-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(29, 111, 138, 0.45) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(122, 215, 207, 0.25) 0%, transparent 50%),
+    linear-gradient(135deg, rgba(4, 18, 29, 0.88) 0%, rgba(6, 32, 48, 0.94) 100%),
+    url('/physics-bg.jpg') no-repeat center center / cover;
+}
+
+.physics-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.physics-nebula {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+  animation: floatNebula 18s ease-in-out infinite alternate;
+}
+
+.nebula-1 {
+  top: -10%;
+  left: -5%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(122, 215, 207, 0.35), transparent 70%);
+  animation-duration: 22s;
+}
+
+.nebula-2 {
+  bottom: -15%;
+  right: -5%;
+  width: 55vw;
+  height: 55vw;
+  background: radial-gradient(circle, rgba(245, 201, 92, 0.25), transparent 70%);
+  animation-duration: 26s;
+  animation-delay: -8s;
+}
+
+.nebula-3 {
+  top: 40%;
+  left: 30%;
+  width: 35vw;
+  height: 35vw;
+  background: radial-gradient(circle, rgba(29, 111, 138, 0.3), transparent 70%);
+  animation-duration: 18s;
+  animation-delay: -4s;
+}
+
+@keyframes floatNebula {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -40px) scale(1.1);
+  }
+  100% {
+    transform: translate(-20px, 30px) scale(0.95);
+  }
+}
+
+.physics-bg-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .auth-shell {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 32px 20px;
-  background:
-    linear-gradient(135deg, rgba(6, 24, 38, 0.65) 0%, rgba(13, 36, 54, 0.75) 100%),
-    url('/physics-bg.jpg') no-repeat center center / cover;
   position: relative;
+  z-index: 2;
+  width: 100%;
 }
 
 .auth-shell-compact {
@@ -864,10 +946,31 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 8px 10px 8px 8px;
+  padding: 8px 14px 8px 8px;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.72);
   border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.clickable-profile-chip {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.clickable-profile-chip:hover {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 24px rgba(6, 38, 58, 0.14);
+  transform: translateY(-2px);
+  border-color: var(--sea);
+}
+
+.dashboard-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
 }
 
 .dashboard-profile-chip strong,
@@ -1703,3 +1806,841 @@ button:disabled {
     align-items: flex-start;
   }
 }
+
+/* ==========================================================================
+   PHYSICS 405: ANTIGRAVITY MECHANICS DASHBOARD (60-30-10 Color Rule)
+   60% Dominant: #F4F6F9 (Lab-inspired crisp off-white)
+   30% Structure: #1A2B4C (Deep Quantum Navy Sidebar & Header)
+   10% Accent: #FF5722 (Electric Laser Orange CTA)
+   ========================================================================== */
+
+.ag-dashboard-root {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  background-color: #F4F6F9;
+  color: #1A2B4C;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* 30% Structural Element 1: Quantum Navy Sidebar */
+.ag-sidebar {
+  background-color: #1A2B4C;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 4px 0 20px rgba(13, 27, 48, 0.15);
+  z-index: 10;
+}
+
+.ag-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ag-brand-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255, 87, 34, 0.15);
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 87, 34, 0.3);
+}
+
+.ag-sidebar-brand h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+}
+
+.ag-sidebar-brand p {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  color: #7ad7cf;
+  font-weight: 600;
+}
+
+.ag-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 24px;
+  flex: 1;
+}
+
+.ag-nav-group-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 12px 12px 6px;
+}
+
+.ag-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: all 180ms ease;
+}
+
+.ag-nav-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  transform: translateX(3px);
+}
+
+.ag-nav-item.active {
+  background: rgba(255, 87, 34, 0.18);
+  color: #FF5722;
+  border-left: 4px solid #FF5722;
+  font-weight: 700;
+}
+
+.ag-sidebar-footer {
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ag-user-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ag-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF5722, #f5c95c);
+  color: #1A2B4C;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  font-size: 0.88rem;
+}
+
+.ag-user-info strong {
+  display: block;
+  font-size: 0.88rem;
+  color: #FFFFFF;
+}
+
+.ag-user-info small {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.76rem;
+}
+
+/* Main Layout Wrapper */
+.ag-main-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* 30% Structural Element 2: Quantum Navy Header */
+.ag-header {
+  background-color: #1A2B4C;
+  color: #FFFFFF;
+  height: 72px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 15px rgba(26, 43, 76, 0.12);
+}
+
+.ag-header-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ag-header-title h1 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+
+.ag-tag {
+  background: rgba(122, 215, 207, 0.15);
+  color: #7ad7cf;
+  border: 1px solid rgba(122, 215, 207, 0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ag-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ag-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: background 150ms ease;
+}
+
+.ag-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: none;
+  transform: none;
+}
+
+.ag-notification-badge {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #FF5722;
+}
+
+/* 60% Dominant Canvas (#F4F6F9) */
+.ag-content-canvas {
+  background-color: #F4F6F9;
+  padding: 32px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.ag-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 28px;
+  align-items: start;
+}
+
+/* Hero Card (White Container on Canvas) */
+.ag-hero-card {
+  background-color: #FFFFFF;
+  border-radius: 24px;
+  padding: 36px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 16px 40px rgba(26, 43, 76, 0.06);
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.ag-hero-text {
+  z-index: 2;
+}
+
+.ag-course-code {
+  color: #FF5722;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.ag-hero-text h2 {
+  margin: 0 0 12px;
+  font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+  font-weight: 900;
+  color: #1A2B4C;
+  line-height: 1.15;
+}
+
+.ag-hero-desc {
+  color: #5A6E85;
+  font-size: 0.96rem;
+  line-height: 1.65;
+  margin: 0 0 28px;
+}
+
+/* 10% Accent CTA Button: Electric Laser Orange (#FF5722) */
+.ag-cta-btn {
+  background-color: #FF5722;
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 16px 28px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 25px rgba(255, 87, 34, 0.38);
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ag-cta-btn:hover {
+  background-color: #e04818;
+  box-shadow: 0 14px 32px rgba(255, 87, 34, 0.5);
+  transform: translateY(-2px);
+}
+
+/* 3D Scientific Diagram: Levitation Device */
+.ag-levitation-stage {
+  height: 260px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+}
+
+.mag-device {
+  position: absolute;
+  width: 140px;
+  height: 22px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #2A3F66 0%, #1A2B4C 100%);
+  border: 2px solid #3B5380;
+  box-shadow: 0 6px 18px rgba(26, 43, 76, 0.25);
+  z-index: 2;
+}
+
+.top-plate {
+  top: 15px;
+}
+
+.bottom-plate {
+  bottom: 15px;
+}
+
+/* Metallic Sphere */
+.levitating-sphere {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #FFFFFF 0%, #B0C4DE 40%, #1A2B4C 90%);
+  box-shadow: 
+    0 0 25px rgba(122, 215, 207, 0.6),
+    0 12px 30px rgba(26, 43, 76, 0.35);
+  position: relative;
+  z-index: 3;
+  animation: floatSphere 3.6s ease-in-out infinite alternate;
+}
+
+@keyframes floatSphere {
+  0% {
+    transform: translateY(-12px);
+    box-shadow: 0 0 20px rgba(122, 215, 207, 0.5), 0 8px 24px rgba(26, 43, 76, 0.3);
+  }
+  100% {
+    transform: translateY(12px);
+    box-shadow: 0 0 35px rgba(122, 215, 207, 0.85), 0 16px 36px rgba(26, 43, 76, 0.4);
+  }
+}
+
+.sphere-core {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(122, 215, 207, 0.6);
+}
+
+.sphere-reflection {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  width: 16px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  filter: blur(1px);
+}
+
+/* Magnetic Field Lines SVG */
+.magnetic-field-lines {
+  position: absolute;
+  width: 280px;
+  height: 230px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.field-line-anim {
+  animation: dashLine 2.5s linear infinite;
+}
+
+.field-line-anim-rev {
+  animation: dashLineRev 2.5s linear infinite;
+}
+
+.field-line-pulse {
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes dashLine {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+@keyframes dashLineRev {
+  to {
+    stroke-dashoffset: 20;
+  }
+}
+
+@keyframes pulseGlow {
+  0% { opacity: 0.4; }
+  100% { opacity: 1.0; stroke: #00f2fe; }
+}
+
+/* Energy Pulses */
+.energy-pulse {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #FF5722;
+  box-shadow: 0 0 12px #FF5722;
+  z-index: 2;
+}
+
+.pulse-top {
+  top: 40px;
+  animation: pulseDown 1.8s ease-in-out infinite;
+}
+
+.pulse-bottom {
+  bottom: 40px;
+  animation: pulseUp 1.8s ease-in-out infinite;
+}
+
+@keyframes pulseDown {
+  0% { transform: translateY(0) scale(0.6); opacity: 0.2; }
+  50% { transform: translateY(65px) scale(1.4); opacity: 1; }
+  100% { transform: translateY(110px) scale(0.4); opacity: 0; }
+}
+
+@keyframes pulseUp {
+  0% { transform: translateY(0) scale(0.6); opacity: 0.2; }
+  50% { transform: translateY(-65px) scale(1.4); opacity: 1; }
+  100% { transform: translateY(-110px) scale(0.4); opacity: 0; }
+}
+
+/* Side Widgets Column */
+.ag-side-widgets {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ag-card {
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 10px 30px rgba(26, 43, 76, 0.04);
+}
+
+.ag-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.ag-card-head h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1A2B4C;
+}
+
+.ag-percent {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #FF5722;
+}
+
+/* Progress Tracker Widget */
+.ag-progress-bar-bg {
+  height: 10px;
+  border-radius: 999px;
+  background-color: #E2E8F0;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.ag-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #1A2B4C 0%, #FF5722 100%);
+  transition: width 1s ease;
+}
+
+.ag-progress-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ag-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.86rem;
+  color: #5A6E85;
+  font-weight: 600;
+}
+
+.ag-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.ag-dot.active {
+  background-color: #FF5722;
+  box-shadow: 0 0 8px rgba(255, 87, 34, 0.5);
+}
+
+.ag-dot.pending {
+  background-color: #CBD5E1;
+}
+
+/* Dedicated Key Formula Card */
+.ag-formula-card {
+  border-left: 4px solid #FF5722;
+}
+
+.ag-formula-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ag-formula-tag {
+  background-color: rgba(26, 43, 76, 0.08);
+  color: #1A2B4C;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 8px;
+  text-transform: uppercase;
+}
+
+.ag-formula-box {
+  background-color: #1A2B4C;
+  color: #FFFFFF;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.ag-math-eq {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #7ad7cf;
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.ag-math-sub {
+  font-size: 0.84rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: "Courier New", Courier, monospace;
+}
+
+.ag-formula-caption {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #64748B;
+  line-height: 1.5;
+}
+
+/* Curriculum & Modules Grid */
+.ag-section-title {
+  margin: 36px 0 20px;
+}
+
+.ag-section-title h3 {
+  margin: 0 0 4px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #1A2B4C;
+}
+
+.ag-section-title p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #64748B;
+}
+
+.ag-modules-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.ag-module-card {
+  background-color: #FFFFFF;
+  border-radius: 18px;
+  padding: 22px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 8px 24px rgba(26, 43, 76, 0.03);
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  transition: all 200ms ease;
+}
+
+.ag-module-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(26, 43, 76, 0.08);
+  border-color: #CBD5E1;
+}
+
+.ag-module-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background-color: rgba(26, 43, 76, 0.06);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.lab-icon {
+  background-color: rgba(255, 87, 34, 0.1);
+}
+
+.ag-module-body {
+  flex: 1;
+}
+
+.ag-module-body h4 {
+  margin: 0 0 6px;
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: #1A2B4C;
+}
+
+.ag-module-body p {
+  margin: 0 0 14px;
+  font-size: 0.85rem;
+  color: #64748B;
+  line-height: 1.55;
+}
+
+.ag-module-action {
+  background-color: #1A2B4C;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.ag-module-action:hover {
+  background-color: #2A3F66;
+  box-shadow: none;
+  transform: none;
+}
+
+.lab-action {
+  background-color: #FF5722;
+}
+
+.lab-action:hover {
+  background-color: #e04818;
+}
+
+@media (max-width: 1200px) {
+  .ag-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ag-hero-card {
+    grid-template-columns: 1fr;
+  }
+  
+  .ag-modules-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 850px) {
+  .ag-dashboard-root {
+    grid-template-columns: 1fr;
+  }
+  
+  .ag-sidebar {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   PROFILE SETTINGS PAGE STYLES
+   ========================================================================== */
+
+.profile-settings-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profile-hero-card {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 248, 255, 0.9) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  padding: 28px;
+}
+
+.profile-avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-large-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, var(--night), var(--sea));
+  box-shadow: 0 14px 35px rgba(6, 38, 58, 0.25);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border: 3px solid #FFFFFF;
+}
+
+.profile-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-avatar-fallback {
+  color: #FFFFFF;
+  font-size: 2.5rem;
+  font-weight: 900;
+}
+
+.avatar-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.avatar-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: var(--sea);
+  color: #FFFFFF;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.avatar-upload-btn:hover {
+  background: #125468;
+  transform: translateY(-1px);
+}
+
+.avatar-remove-btn {
+  background: transparent;
+  color: #dc2626;
+  font-size: 0.78rem;
+  padding: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.avatar-remove-btn:hover {
+  text-decoration: underline;
+  background: transparent;
+  box-shadow: none;
+}
+
+.profile-summary h2 {
+  margin: 0 0 6px;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--night);
+}
+
+.profile-role-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(29, 111, 138, 0.12);
+  color: var(--sea);
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+}
+
+.profile-email-text {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #5d7785;
+  font-size: 0.9rem;
+}
+
+.profile-form-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 20px;
+}
+
+@media (max-width: 768px) {
+  .profile-hero-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+

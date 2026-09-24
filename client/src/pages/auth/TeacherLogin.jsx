@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import PhysicsBackground from "../../components/PhysicsBackground";
 
 const initialForm = {
   emailOrPhone: "",
@@ -74,7 +75,8 @@ export default function TeacherLogin() {
   };
 
   return (
-    <div className="auth-shell auth-shell-compact">
+    <PhysicsBackground>
+      <div className="auth-shell auth-shell-compact">
       <section className="auth-panel auth-panel-center">
         <div className="auth-panel-head">
           <div className="auth-badge">
@@ -184,5 +186,6 @@ export default function TeacherLogin() {
         </div>
       </section>
     </div>
+  </PhysicsBackground>
   );
 }

@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const studentNavItems = [
   { to: "/dashboard", label: "Overview", hint: "Today" },
@@ -92,13 +92,13 @@ export default function Sidebar({ variant = "student" }) {
 
   return (
     <aside className="sidebar">
-      <div className="sidebar-brand">
+      <Link to="/dashboard" className="sidebar-brand" style={{ textDecoration: 'none', color: 'inherit' }}>
         <div className="sidebar-brand-badge">PH</div>
         <div>
           <h2>Physics LMS</h2>
           <p>Smart learning panel</p>
         </div>
-      </div>
+      </Link>
 
       <section className="sidebar-section">
         <p className="sidebar-label">Navigation</p>

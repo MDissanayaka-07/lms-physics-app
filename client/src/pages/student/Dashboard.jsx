@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import MainLayout from "../../layouts/MainLayout";
 import Card from "../../components/Card";
+import { AuthContext } from "../../context/AuthContext";
 
 const statCards = [
   {
@@ -50,12 +52,15 @@ const activityItems = [
 ];
 
 export default function Dashboard() {
+  const { user } = useContext(AuthContext);
+  const displayName = user?.callingName || user?.firstName || user?.fullName || "Student";
+
   return (
     <MainLayout>
       <section className="hero-panel">
         <div>
           <span className="chip">Good Morning</span>
-          <h2 className="hero-heading">Welcome back, Madhuwantha.</h2>
+          <h2 className="hero-heading">Welcome back, {displayName}.</h2>
           <p className="hero-copy">
             Your dashboard is organized around the things that matter most today:
             class readiness, score growth, submissions, and quick access to
