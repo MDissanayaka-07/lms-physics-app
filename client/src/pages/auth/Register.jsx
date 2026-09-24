@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { sendVerificationEmail } from "../../services/emailService";
+import PhysicsBackground from "../../components/PhysicsBackground";
 
 const initialForm = {
   fullName: "",
@@ -182,7 +183,8 @@ export default function Register() {
   const isPasswordMatching = touched.confirmPassword && !errors.confirmPassword && form.confirmPassword && form.confirmPassword === form.password;
 
   return (
-    <div className="auth-shell auth-shell-compact">
+    <PhysicsBackground>
+      <div className="auth-shell auth-shell-compact">
       <section className="auth-panel auth-panel-center-wide">
         <div className="auth-panel-head">
           <div className="auth-badge">
@@ -506,5 +508,6 @@ export default function Register() {
         </div>
       </section>
     </div>
+  </PhysicsBackground>
   );
 }

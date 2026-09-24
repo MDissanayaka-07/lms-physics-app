@@ -9,6 +9,7 @@ import Quiz from "./pages/student/Quiz";
 import Papers from "./pages/student/Papers";
 import Submission from "./pages/student/Submission";
 import TeacherDashboard from "./pages/teacher/TeacherDashboard";
+import AntigravityMechanics from "./pages/student/AntigravityMechanics";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path="/otp" element={<OTP />} />
       <Route path="/register" element={<Register />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/antigravity-mechanics" element={<AntigravityMechanics />} />
       <Route path="/marks" element={<Marks />} />
       <Route path="/quiz" element={<Quiz />} />
       <Route path="/papers" element={<Papers />} />

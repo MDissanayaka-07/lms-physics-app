@@ -2,6 +2,7 @@ import { useContext, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { verifySubmittedCode, sendVerificationEmail } from "../../services/emailService";
+import PhysicsBackground from "../../components/PhysicsBackground";
 
 export default function OTP() {
   const [form, setForm] = useState({ code: "" });
@@ -74,7 +75,8 @@ export default function OTP() {
   };
 
   return (
-    <div className="auth-shell auth-shell-compact">
+    <PhysicsBackground>
+      <div className="auth-shell auth-shell-compact">
       <section className="auth-panel auth-panel-center">
         <div className="auth-panel-head">
           <div className="auth-badge">
@@ -162,5 +164,6 @@ export default function OTP() {
         </div>
       </section>
     </div>
+  </PhysicsBackground>
   );
 }
